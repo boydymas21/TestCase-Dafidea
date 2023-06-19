@@ -17,10 +17,10 @@
                 </tr>
         </thead>
         <tbody>
-            <?php $i = $data->firstItem()?>
+            
             @foreach ($data as $item)
             <tr>
-                <td>{{$i}}</td>
+                <td>{{$item->id}}</td>
                 <td>{{$item->judul}}</td>
                 <td>{{\Illuminate\Support\Str::limit($item->konten, 100, '....')}}</td>
                 <td>{{$item->tgl_post}}</td>
@@ -33,7 +33,7 @@
                     </form>
                 </td>
             </tr> 
-            <?php $i++ ?>
+            
             @endforeach
         </tbody>
     </table>

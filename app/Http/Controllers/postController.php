@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class postController extends Controller
 {
@@ -16,7 +15,7 @@ class postController extends Controller
      */
     public function index()
     {
-        $data = post::orderBy('id', 'desc')->paginate(10);
+        $data = post::orderBy('id', 'desc')->get();
         return view('post.index')->with('data', $data);
     }
 
@@ -70,13 +69,13 @@ class postController extends Controller
 
     public function detail($id)
     {
-        $data = DB::table('posts')->where('id', $id)->first();
+        $data = post::where('id', $id)->first();
         $komen = Comment::all();
         return view('detail', ['data'=>$data, 'komen'=>$komen, 'id'=>$id]);
     }
 
     public function insertData(Request $request, $id){
-        $data = DB::table('posts')->where('id', $id)->first();
+        $data = Comment::where('id_article', $id)->first();
         $user = new Comment();
         $user->name = $request->nama;
         $user->comment = $request->komentar;
@@ -132,6 +131,7 @@ class postController extends Controller
      */
     public function destroy($id)
     {
+        Comment::where('id_article', $id)->delete();
         post::where('judul', $id)->delete();
         return redirect()->to('post');
     }
